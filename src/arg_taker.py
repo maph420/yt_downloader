@@ -17,7 +17,8 @@ def helpDisplay():
     print("-h , --help\n\tshow this help message and exit\n\n")
     print("-d [video_url_goes_here], --download [video_url_goes_here]\n\tdownload a video given its url\n\n")
     print("-s [video_title] <num_of_results_to_be_searched>, --search [video_title] <num_of_results_to_be_searched>\n\tMake a youtube search within the CLI given a video's title")
-    print("\t(You can ommit the <num_of_results_to_be_searched> arg though, then 10 results will be displayed as default)\n")
+    print("\t(You can ommit the <num_of_results_to_be_searched> arg though, then 10 results will be displayed as default)")
+    print("\tIMPORTANT: [video_title] CANNOT contain spaces due to arg compatibility, however youtube results won't change at all if you use '_' instead of a space\n")
     exit()
 
 

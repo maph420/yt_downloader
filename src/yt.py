@@ -14,7 +14,7 @@ def show_results(l,s,next_page):
     j=1
     skipCount=0
     numOfResultRefresh=10
-    if next_page==True:
+    if next_page:
         nextText=" following " 
         s.get_next_results()
         i = l+1
@@ -67,6 +67,7 @@ def show_results(l,s,next_page):
                 chosenUrl = filter(str(s.results[int(response)-1]),"videoId=(.*?)>")
                 download_vid(chosenUrl)
             else:
+                print(f"Error: unknown input, your options were: ['next', 'quit', a number between (1-{i})]")
                 exit()
 
 def filter(regExpression,pattern):
@@ -131,7 +132,7 @@ def download_vid(videoUrl):
         print("Downloading...")
         videoStreamFiltered.download(output_path=chosenPath)
     except:
-        print("couldn't download the video, srry")
+        print("Error: couldn't download the video, srry")
     else:
         print("Success!")
 
