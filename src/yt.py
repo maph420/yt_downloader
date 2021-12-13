@@ -53,16 +53,21 @@ def show_results(l,s,next_page):
         exit()
     elif response == 'next':
         show_results(l,s,True)
-    elif int(response) <= i:
-        print(f"You've selected: {str(s.results[int(response)-1].title)}")
-        check = input("Is this correct? (y/n)\n> ")
-        if check == 'y':
-            chosenUrl = filter(str(s.results[int(response)-1]),"videoId=(.*?)>")
-            download_vid(chosenUrl)
-        else:
-            exit()
     else:
-        print("Error: unknown input, check with 'python yt.py --help' the possibilities.")
+        try:
+            intResponse = int(response)
+        except:
+            print(f"Error: unknown input, your options were: ['next', 'quit', a number between (1-{i})]")
+            exit()
+
+        if intResponse <= i:
+            print(f"You've selected: {str(s.results[int(response)-1].title)}")
+            check = input("Is this correct? (y/n)\n> ")
+            if check == 'y':
+                chosenUrl = filter(str(s.results[int(response)-1]),"videoId=(.*?)>")
+                download_vid(chosenUrl)
+            else:
+                exit()
 
 def filter(regExpression,pattern):
     resultingString = re.search(pattern,regExpression).group(1)
@@ -75,14 +80,14 @@ def download_vid(videoUrl):
     except:
         print("\n-----------------------")
         print("Error:url not found :(")
-        print('Usage: "python yt.py -d https://www.youtube.com/watch?v=the_url_goes_here"')
+        print("Usage: 'python yt.py -d https://www.youtube.com/watch?v=the_url_goes_here'")
         print("-----------------------\n")
         exit()
     
     possib = yt.streams.filter(file_extension='mp4', progressive=True)
     n=1
 
-    print("Choose the video quality:")
+    print("\nChoose the video quality:")
     for p in possib:
         if p.includes_audio_track:
             res = filter(str(p),'res="(.*?)"')
@@ -112,7 +117,7 @@ def download_vid(videoUrl):
 
     videoStreamFiltered = yt.streams.filter(file_extension='mp4', progressive=True).get_by_itag(int(itag))
 
-    print("Finally, choose the path where your video will be saved")
+    print("\nFinally, choose the path where you want the video to be saved")
     print(f'You can write "default" if you want it to be saved in the default path (default windows path: {winPath}, default linux path: {lnxPath})')
 
     chosenPath = input("> ")
