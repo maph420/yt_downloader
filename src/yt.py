@@ -67,7 +67,7 @@ def show_results(l,s,next_page):
                 chosenUrl = filter(str(s.results[int(response)-1]),"videoId=(.*?)>")
                 download_vid(chosenUrl)
             else:
-                print(f"Error: unknown input, your options were: ['next', 'quit', a number between (1-{i})]")
+                print(f"Error: unknown input, your options were: ['y', 'n']")
                 exit()
 
 def filter(regExpression,pattern):
@@ -109,13 +109,17 @@ def download_vid(videoUrl):
         print("Error: OS not supported :(")
         exit()
 
-    if int(qualityResponse)>len(possib) or int(qualityResponse)<1:
-        print("Error: That's not a valid quality ! Look over the options again.")
-        exit()
-    else:
-        print("Chosen quality: "+filter(str(possib[int(qualityResponse)-1]),'res="(.*?)"'))
-        itag = filter(str(possib[int(qualityResponse)-1]),'itag="(.*?)"')
-
+    try:
+        if int(qualityResponse)>len(possib) or int(qualityResponse)<1:
+            print("Error: That's not a valid quality ! Look over the options again.")
+            exit()
+        else:
+            print("Chosen quality: "+filter(str(possib[int(qualityResponse)-1]),'res="(.*?)"'))
+            itag = filter(str(possib[int(qualityResponse)-1]),'itag="(.*?)"')
+    except:
+            print("Error: That's not a valid quality ! Look over the options again.")
+            exit()
+            
     videoStreamFiltered = yt.streams.filter(file_extension='mp4', progressive=True).get_by_itag(int(itag))
 
     print("\nFinally, choose the path where you want the video to be saved")

@@ -23,7 +23,7 @@ def helpDisplay():
 
 
 def main():
-    if not (sys.argv[1]=='-h' or sys.argv[1]=='--help') and len(sys.argv) < 3:
+    if len(sys.argv)<2 or not (sys.argv[1]=='-h' or sys.argv[1]=='--help') and len(sys.argv) < 3:
         print("Error: Too few arguments, try again\nYou can look for help with: 'python yt.py -h'")
         exit()
     else:
